@@ -19,3 +19,24 @@ const kmhToMs = (velocityKmh) => velocityKmh * (1000 / 3600);
 
 // Utility function to convert m/s to km/h
 const msToKmh = (velocityMs) => velocityMs * (3600 / 1000);
+
+
+// Robust function to calculate new velocity
+const calcNewVel = (vel, acc, time) => { 
+  if (typeof vel !== 'number' || typeof acc !== 'number' || typeof time !== 'number') {
+    throw new Error("All inputs must be numbers.");
+  }
+
+  if (vel < 0 || acc < 0 || time < 0) {
+    throw new Error("Negative values for velocity, acceleration, or time are not allowed.");
+  }
+
+  // Convert velocity from km/h to m/s for the calculation
+  const velMs = kmhToMs(vel);
+
+  // Calculate new velocity in m/s
+  const newVelMs = velMs + (acc * time);
+
+  // Convert the new velocity back to km/h
+  return msToKmh(newVelMs);
+};
