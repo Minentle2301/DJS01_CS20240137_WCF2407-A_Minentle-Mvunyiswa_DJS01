@@ -40,3 +40,25 @@ const calcNewVel = (vel, acc, time) => {
   // Convert the new velocity back to km/h
   return msToKmh(newVelMs);
 };
+
+// Calculate the new distance traveled in kilometers
+// Convert time from seconds to hours for correct distance calculation
+const timeHours = time / 3600;
+const d2 = d + (vel * timeHours); // Corrected calculation
+
+// Calculate the remaining fuel after the time period
+const rf = fuel - (fbr * time); // Corrected to subtract the burned fuel
+
+// Calculate the new velocity using the robust function
+let vel2;
+try {
+  vel2 = calcNewVel(vel, acc, time);
+} catch (error) {
+  console.error("Error in velocity calculation:", error.message);
+  vel2 = "Invalid"; // Fallback value in case of error
+}
+
+// Output the corrected results
+console.log(`Corrected New Velocity: ${vel2 !== "Invalid" ? vel2.toFixed(2) : "N/A"} km/h`);
+console.log(`Corrected New Distance: ${d2.toFixed(2)} km`);
+console.log(`Corrected Remaining Fuel: ${rf.toFixed(2)} kg`);
